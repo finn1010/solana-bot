@@ -15,3 +15,32 @@ params = {'inputMint': 'So11111111111111111111111111111111111111112',
 response = requests.request("GET", url, params=params)
 
 print(response.text)
+
+import requests
+
+def get_circulating_supply(token_address):
+    url = f"https://api.solscan.io/token/metadata?tokenAddress={token_address}"
+    
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an error for bad responses
+        data = response.json()
+        
+        # Check if the data contains 'data' field
+        if 'data' in data and 'circulatingSupply' in data['data']:
+            circulating_supply = data['data']['circulatingSupply']
+            return circulating_supply
+        else:
+            print("No circulating supply data found.")
+            return None
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+        return None
+
+# Example token address (replace with the actual token mint address)
+token_address = "7WdDyHa7GDuAvYZAGFGEbDoBUka1S8YvbPgTW2WPpump"  # Replace with the token mint address
+circulating_supply = get_circulating_supply(token_address)
+
+if circulating_supply is not None:
+    print(f"Circulating Supply: {circulating_supply}")
