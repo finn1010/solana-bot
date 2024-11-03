@@ -4,4 +4,3 @@ requests=2.32.3
 helius=0.0.3
 Flask=2.0.3
 werkzeug=2.0.3
-ngrok=1.4.0 
